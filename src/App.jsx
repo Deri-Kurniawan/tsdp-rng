@@ -83,9 +83,10 @@ function App() {
 
     window.addEventListener("keydown", keydownHandler);
 
+    execFinalCalculation();
+
     return () => {
       window.removeEventListener("keydown", keydownHandler);
-      execFinalCalculation();
     };
   }, []);
 
