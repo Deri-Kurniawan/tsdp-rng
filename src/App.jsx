@@ -3,29 +3,30 @@ import { getInitialData, getInitialGradeRules, keyBindings } from "./data";
 import { valueIsOnRange } from "./utils";
 
 function App() {
-  const [gradeRules] = useState(() => getInitialGradeRules());
+  const [gradingRules] = useState(() => getInitialGradeRules());
   const [data, setData] = useState(() => getInitialData());
   const [finalGrade, setFinalGrade] = useState(0);
-  const [gradeType, setGradeType] = useState({
+  const [finalGradeTypes, setFinalGradeTypes] = useState({
     predicate: "E",
+    description: "Gagal",
     color: "#ff3300",
   });
 
   const closeModalInfoTriggerRef = useRef(null);
 
-  const getGradeType = (value) => {
+  const getFinalGradeTypes = (value) => {
     const grade = Math.round(value);
-    let newGrade = { ...gradeType };
+    let newGradeTypes = { ...finalGradeTypes };
 
-    gradeRules.map(
+    gradingRules.map(
       ({ predicate, lowerLimit, upperLimit, description, color }) => {
         if (valueIsOnRange(grade, lowerLimit, upperLimit)) {
-          newGrade = { predicate, description, color };
+          newGradeTypes = { predicate, description, color };
         }
       }
     );
 
-    return newGrade;
+    return newGradeTypes;
   };
 
   const execFinalCalculation = () => {
@@ -37,7 +38,7 @@ function App() {
     });
 
     setFinalGrade((prev) => prev + grade);
-    setGradeType(getGradeType(grade));
+    setFinalGradeTypes(getFinalGradeTypes(grade));
   };
 
   const randomizeData = () => {
@@ -82,7 +83,6 @@ function App() {
     };
 
     window.addEventListener("keydown", keydownHandler);
-
     execFinalCalculation();
 
     return () => {
@@ -175,7 +175,7 @@ function App() {
                 </thead>
 
                 <tbody>
-                  {gradeRules.map(
+                  {gradingRules.map(
                     (
                       { predicate, lowerLimit, upperLimit, description },
                       index
@@ -200,15 +200,15 @@ function App() {
               </h1>
               <h2
                 className="text-[150px] transition-all duration-700 ease-in-out drop-shadow-lg shadow-black"
-                style={{ color: gradeType.color }}
+                style={{ color: finalGradeTypes.color }}
               >
-                {gradeType.predicate}
+                {finalGradeTypes.predicate}
               </h2>
               <h2 className="text-md text-2xl font-bold transition-all duration-700 ease-in-out drop-shadow-lg shadow-black">
                 {finalGrade.toFixed(2)} -&gt; {Math.round(finalGrade)}
               </h2>
               <p className="my-5 font-semibold transition-all duration-700 ease-in-out drop-shadow-lg shadow-black">
-                {gradeType.description}
+                {finalGradeTypes.description}
               </p>
               <button
                 className="btn btn-active btn-ghost mt-2 mr-2"
@@ -333,7 +333,7 @@ function App() {
               </thead>
 
               <tbody>
-                {gradeRules.map(
+                {gradingRules.map(
                   (
                     { predicate, lowerLimit, upperLimit, description, color },
                     index
@@ -375,8 +375,8 @@ function App() {
           <p className="text-sm my-1">
             Setelah mencocokan nilai, maka diketahui bahwa nilai akhir yang
             didapatkan adalah <b>{Math.round(finalGrade)}</b> dengan predikat{" "}
-            <b>{gradeType.predicate}</b> dan dengan keterangan nilai yaitu{" "}
-            <b>{gradeType.description}</b>
+            <b>{finalGradeTypes.predicate}</b> dan dengan keterangan nilai yaitu{" "}
+            <b>{finalGradeTypes.description}</b>
           </p>
           <h4 className="hidden md:block text-xl font-bold mt-3 mb-1">
             Informasi Pintasan Keyboard
