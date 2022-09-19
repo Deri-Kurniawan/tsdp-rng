@@ -1,4 +1,4 @@
-const getInitialGradeRules = () => [
+const getInitialGradingRules = () => [
   {
     predicate: "A",
     lowerLimit: 70,
@@ -88,4 +88,4 @@ export const keyBindings = [
   },
 ];
 
-export { getInitialGradeRules, getInitialData };
+export { getInitialGradingRules, getInitialData };

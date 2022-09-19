@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { getInitialData, getInitialGradeRules, keyBindings } from "./data";
+import { getInitialData, getInitialGradingRules, keyBindings } from "./data";
 import { valueIsOnRange } from "./utils";
 
 function App() {
-  const [gradingRules] = useState(() => getInitialGradeRules());
+  const [gradingRules] = useState(() => getInitialGradingRules());
   const [data, setData] = useState(() => getInitialData());
   const [finalGrade, setFinalGrade] = useState(0);
   const [finalGradeTypes, setFinalGradeTypes] = useState({
