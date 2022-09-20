@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getInitialData, getInitialGradingRules, keyBindings } from "./data";
 import { valueIsOnRange } from "./utils";
+import { ToastContainer, toast } from "react-toastify";
 
 function App() {
   const [gradingRules] = useState(() => getInitialGradingRules());
@@ -90,6 +91,24 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    let limit = 100;
+    data.map(({ valueWeight }) => {
+      if (valueWeight != 0) {
+        limit -= valueWeight;
+      }
+    });
+
+    if (limit < 0) {
+      toast.warning(
+        "Total bobot lebih dari 100, akan memengaruhi nilai akhir",
+        {
+          position: "bottom-right",
+        }
+      );
+    }
+  }, [finalGrade]);
+
   return (
     <>
       <div className="lg:max-w-[1400px] lg:w-full lg:m-auto">
@@ -103,10 +122,6 @@ function App() {
                 <div className="form-control" key={id}>
                   <label className="label" htmlFor={`bobot-${id}`}>
                     <span className="label-text font-bold">{label}</span>
-                    <span className="label-text">
-                      {valueWeight}/
-                      <span className="font-semibold">{maxValueWeight}</span>
-                    </span>
                   </label>
                   <input
                     className="input input-bordered"
@@ -391,7 +406,7 @@ function App() {
               </thead>
               <tbody>
                 {keyBindings.map(({ key, action }) => (
-                  <tr>
+                  <tr key={key}>
                     <td className="text-center">{key}</td>
                     <td>{action}</td>
                   </tr>
@@ -402,6 +417,7 @@ function App() {
         </div>
       </div>
       {/* Info Modal End */}
+      <ToastContainer />
     </>
   );
 }
