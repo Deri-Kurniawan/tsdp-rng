@@ -261,8 +261,7 @@ function App() {
           <div className="mockup-code text-sm my-2">
             <pre>
               <code>
-                hasil = &#40;nilaiRataMahasiswa &#47; batasNilaiMaksimal&#41; *
-                nilaiBobot
+                hasil = &#40;nilai &#47; batasNilaiMaksimal&#41; * bobot
               </code>
             </pre>
           </div>
@@ -275,7 +274,7 @@ function App() {
                 <tr className="text-center">
                   <th className="text-left">Jenis</th>
                   <th></th>
-                  <th>Nilai Rata Mahasiswa</th>
+                  <th>Nilai/Nilai Rata</th>
                   <th></th>
                   <th>Maks Nilai</th>
                   <th></th>
@@ -285,8 +284,8 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-                {data.map(({ label, value, maxValue, valueWeight }) => (
-                  <tr key={label} className="text-center items-center">
+                {data.map(({ id, label, value, maxValue, valueWeight }) => (
+                  <tr key={id} className="text-center items-center">
                     <td className="text-left">{label}</td>
                     <td>&#61;</td>
                     <td>
